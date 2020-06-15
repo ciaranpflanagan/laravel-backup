@@ -4,6 +4,7 @@ namespace Spatie\Backup;
 
 use Illuminate\Support\ServiceProvider;
 use Spatie\Backup\Commands\BackupCommand;
+use Spatie\Backup\Commands\BackupDailyCommand;
 use Spatie\Backup\Commands\CleanupCommand;
 use Spatie\Backup\Commands\ListCommand;
 use Spatie\Backup\Commands\MonitorCommand;
@@ -33,6 +34,7 @@ class BackupServiceProvider extends ServiceProvider
         $this->app['events']->subscribe(EventHandler::class);
 
         $this->app->bind('command.backup:run', BackupCommand::class);
+        $this->app->bind('command.backup:run', BackupDailyCommand::class);
         $this->app->bind('command.backup:clean', CleanupCommand::class);
         $this->app->bind('command.backup:list', ListCommand::class);
         $this->app->bind('command.backup:monitor', MonitorCommand::class);
@@ -41,6 +43,7 @@ class BackupServiceProvider extends ServiceProvider
 
         $this->commands([
             'command.backup:run',
+            'command.backupDaily:run',
             'command.backup:clean',
             'command.backup:list',
             'command.backup:monitor',
